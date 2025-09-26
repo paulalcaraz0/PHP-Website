@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Login | UISOCIAL</title>
+<title>Login | PAGE</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
@@ -14,6 +14,7 @@
         justify-content: center;
         align-items: center;
         font-family: 'Segoe UI', sans-serif;
+        padding: 20px;
     }
 
     /* Card with hover lift */
@@ -26,16 +27,18 @@
         display: flex;
         overflow: hidden;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+        min-height: 500px;
     }
     .login-card:hover {
         transform: translateY(-10px);
-        box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+        box-shadow: 0 25px 60px 60px rgba(0,0,0,0.3);
     }
 
     /* Left image panel */
     .login-left {
         width: 45%;
         background: url('/3ff7505f-1300-4e91-a01c-1e4bb41060c0.jpg') center/cover no-repeat;
+        min-height: 400px;
     }
 
     /* Right form panel */
@@ -45,6 +48,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        min-height: 400px;
     }
     .login-right h1 {
         font-size: 1.1rem;
@@ -75,6 +79,12 @@
         box-shadow: 0 0 10px rgba(255, 75, 43, 0.6);
         outline: none;
     }
+    
+    /* Error state for inputs */
+    .form-control.is-invalid {
+        border-color: #dc3545;
+        box-shadow: 0 0 10px rgba(220, 53, 69, 0.3);
+    }
 
     /* Login button with hover animation */
     .btn-login {
@@ -103,11 +113,18 @@
         background: #fff;
         color: #555;
         font-weight: 500;
-        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        transition: box-shadow 0.3s ease, transform 0.3s ease, background 0.3s ease;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .btn-google:hover {
         box-shadow: 0 0 15px rgba(66, 133, 244, 0.5);
+        background: rgba(66, 133, 244, 0.1);
+        color: #4285f4;
         transform: translateY(-2px);
+        text-decoration: none;
     }
 
     .or-divider {
@@ -116,11 +133,145 @@
         color: #888;
     }
 
-    /* Responsive */
-    @media (max-width: 900px) {
-        .login-card { flex-direction: column; }
-        .login-left, .login-right { width: 100%; height: 220px; }
-        .login-right { padding: 40px 30px; }
+    /* Error message styling */
+    .alert {
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .alert-danger {
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+    }
+
+    /* Mobile First Responsive Design */
+    @media (max-width: 1024px) {
+        .login-card {
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .login-left {
+            width: 40%;
+        }
+        
+        .login-right {
+            width: 60%;
+            padding: 40px 30px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        body {
+            padding: 10px;
+            align-items: flex-start;
+            padding-top: 50px;
+        }
+        
+        .login-card {
+            flex-direction: column;
+            width: 100%;
+            max-width: 500px;
+            min-height: auto;
+        }
+        
+        .login-left {
+            width: 100%;
+            height: 200px;
+            min-height: 200px;
+        }
+        
+        .login-right {
+            width: 100%;
+            padding: 30px 25px;
+            min-height: auto;
+        }
+        
+        .login-right h1 {
+            font-size: 1rem;
+        }
+        
+        .login-right h2 {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        body {
+            padding: 5px;
+            padding-top: 30px;
+        }
+        
+        .login-card {
+            max-width: 100%;
+            border-radius: 15px;
+        }
+        
+        .login-left {
+            height: 150px;
+            min-height: 150px;
+        }
+        
+        .login-right {
+            padding: 25px 20px;
+        }
+        
+        .login-right h1 {
+            font-size: 0.9rem;
+        }
+        
+        .login-right h2 {
+            font-size: 1.3rem;
+        }
+        
+        .form-control {
+            padding: 0.65rem 0.8rem;
+            font-size: 0.9rem;
+        }
+        
+        .btn-login, .btn-google {
+            padding: 0.65rem;
+            font-size: 0.9rem;
+        }
+        
+        .alert {
+            font-size: 0.8rem;
+            padding: 0.6rem 0.8rem;
+        }
+    }
+
+    @media (max-width: 320px) {
+        .login-right {
+            padding: 20px 15px;
+        }
+        
+        .login-right h2 {
+            font-size: 1.2rem;
+        }
+        
+        .form-control {
+            padding: 0.6rem 0.7rem;
+            font-size: 0.85rem;
+        }
+        
+        .btn-login, .btn-google {
+            padding: 0.6rem;
+            font-size: 0.85rem;
+        }
+    }
+
+    /* Ensure buttons are always visible */
+    .btn-google {
+        min-height: 45px;
+        box-sizing: border-box;
+    }
+    
+    .btn-login {
+        min-height: 45px;
+        box-sizing: border-box;
     }
 </style>
 </head>
@@ -149,12 +300,33 @@ window.addEventListener('pageshow', function (event) {
     <div class="login-right">
         <h1>WELCOME!</h1>
         <h2>Log-In Page</h2>
-        <p>Welcome to JAPAN</p>
+        <p>Welcome to Philippines</p>
+
+        {{-- Display validation errors --}}
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                @foreach ($errors->all() as $error)
+                    {{ $error }}
+                @endforeach
+            </div>
+        @endif
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
-            <input type="email" name="email" class="form-control" placeholder="Email" required>
-            <input type="password" name="password" class="form-control" placeholder="Password" required>
+            <input type="email" 
+                   name="email" 
+                   class="form-control @error('email') is-invalid @enderror" 
+                   placeholder="Email" 
+                   value="{{ old('email') }}" 
+                   required>
+            
+            <input type="password" 
+                   name="password" 
+                   class="form-control @error('password') is-invalid @enderror" 
+                   placeholder="Password" 
+                   required>
+            
             <button type="submit" class="btn btn-login">Login</button>
         </form>
 
