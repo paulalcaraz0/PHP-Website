@@ -31,7 +31,7 @@
     }
     .login-card:hover {
         transform: translateY(-10px);
-        box-shadow: 0 25px 60px 60px rgba(0,0,0,0.3);
+        box-shadow: 0 25px 60px 30px rgba(0,0,0,0.3);
     }
 
     /* Left image panel */
