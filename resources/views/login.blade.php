@@ -8,7 +8,7 @@
 
 <style>
     body {
-        background: #f7f7f9;
+        background: url('/3ff7505f-1300-4e91-a01c-1e4bb41060c0.jpg') center/cover no-repeat fixed;
         min-height: 100vh;
         display: flex;
         justify-content: center;
@@ -16,9 +16,9 @@
         font-family: 'Segoe UI', sans-serif;
         padding: 20px;
     }
-
     /* Card with hover lift */
     .login-card {
+        border: white 15px solid;
         width: 900px;
         max-width: 95%;
         background: #fff;
@@ -276,10 +276,7 @@
 </style>
 </head>
 <script>
-/**
- * If the page was restored from bfcache (event.persisted)
- * or the navigation type is back/forward, reload so we fetch a fresh CSRF token.
- */
+// If the page was restored from bfcache (event.persisted) or the navigation type is back/forward, reload so we fetch a fresh CSRF token.
 window.addEventListener('pageshow', function (event) {
   var navEntries = (performance && performance.getEntriesByType)
     ? performance.getEntriesByType('navigation')
@@ -300,7 +297,7 @@ window.addEventListener('pageshow', function (event) {
     <div class="login-right">
         <h1>WELCOME!</h1>
         <h2>Log-In Page</h2>
-        <p>Welcome to Philippines</p>
+        <p>Welcome to Log-In Page</p>
 
         {{-- Display validation errors --}}
         @if ($errors->any())

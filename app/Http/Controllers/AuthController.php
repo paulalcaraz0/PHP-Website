@@ -11,22 +11,23 @@ class AuthController extends Controller
 {
     // Normal login method
     public function login(Request $request)
-{
-    $credentials = $request->only('email', 'password');
+    {
+        $credentials = $request->only('email', 'password');
 
-    if (Auth::attempt($credentials)) {
-        $request->session()->regenerate();
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            
+            // Get the authenticated user ID
+            $userId = Auth::id();
 
-        // ✅ force redirect to the resume page every time
-        return redirect()->route('resume');
+            // Redirect to resume edit page with user ID in URL
+            return redirect()->route('resume.edit', ['id' => $userId]);
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
-
-    return back()->withErrors([
-        'email' => 'The provided credentials do not match our records.',
-    ]);
-}
-
-
 
     // Google redirect
     public function redirectToGoogle()
@@ -37,16 +38,23 @@ class AuthController extends Controller
     // Google callback
     public function handleGoogleCallback()
     {
-        $googleUser = Socialite::driver('google')->user();
+        try {
+            $googleUser = Socialite::driver('google')->user();
 
-        // Check if user exists or create
-        $user = User::firstOrCreate(
-            ['email' => $googleUser->getEmail()],
-            ['name' => $googleUser->getName(), 'password' => bcrypt(uniqid())]
-        );
+            // Check if user exists or create
+            $user = User::firstOrCreate(
+                ['email' => $googleUser->getEmail()],
+                ['name' => $googleUser->getName(), 'password' => bcrypt(uniqid())]
+            );
 
-        Auth::login($user, true);
+            Auth::login($user, true);
 
-        return redirect()->route('resume');
+            // Redirect to resume edit page with user ID in URL
+            return redirect()->route('resume.edit', ['id' => $user->id]);
+            
+        } catch (\Exception $e) {
+            return redirect()->route('login')
+                ->withErrors(['error' => 'Failed to login with Google. Please try again.']);
+        }
     }
 }
